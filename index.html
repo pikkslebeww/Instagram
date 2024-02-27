@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <title>Instagram Clone Coding</title>
+    <style>
+        @import url('css/default.css');
+        @import url('css/gnb.css');
+        @import url('css/wrapper.css');
+        .feed {
+            width: 500px;
+            margin-right: 30px;
+            background-color: white;
+
+            font-size: 13px;
+
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            height: auto;
+            margin-top: 20px;
+        }
+        .account {
+            width: 30%;
+            margin-top: 10px;
+            font-size: 14px;
+            height: 570px;
+        }
+        .account-content {
+            width: 100%;
+        }
+        .account-content > li {
+            justify-content: space-between;
+
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .account-content > li > p {
+            margin-left: 20px;
+            margin-right: auto;
+
+            align-items: flex-start;
+        }
+        .account-content > li > a {
+            color: rgb(47, 196, 255);
+            font-size: 13px;
+            margin-right: 65px;
+        }
+        .account-content > li > p > span:first-child {
+            font-weight: bold;
+            color: black;
+        }
+        .account-content > li > p > span:last-child {
+            color: gray;
+        } 
+        .img-wrap {
+            border-radius: 50%;
+            overflow: hidden;
+            border: 0.5px solid #f2f2f2;
+            display: flex;
+        }
+        li.suggestion > span {
+            color: gray;
+        }
+        li.suggestion > a {
+            color: black;
+        }
+        .about {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            margin-right: 65px;
+        }
+        .about  > a {
+            color: lightgray;
+            font-size: 11px;
+            margin-right: 2px;
+        }
+        .name {
+            color: lightgray;
+            font-size: 12px;
+
+            margin-right: auto;
+        }
+        .profile {
+            justify-content: space-between;
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .profile > p {
+            margin-left: 18px;
+            margin-right: auto;
+        }
+        .profile > p > span:first-child {
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-right: auto;
+        }
+        .swiper {
+            width: 495PX;
+        }
+        .swiper-button-prev, .swiper-button-next {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: rgb(199, 199, 199);
+        }
+        .swiper-button-prev:after, .swiper-button-next:after {
+            font-size: 12px;
+            color:white;
+            font-weight: bold;
+        }
+        .imgs > div img {
+            width: 100%;
+        }
+        .icons {
+            width: 95%;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .icons > img {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .icons > img:last-child {
+            margin-left: auto;
+        }
+        .likes {
+            margin-right: auto;
+            margin-left: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .captions {
+            width: 95%;
+            margin-top: 5px;
+        }
+        .captions > span.title {
+            font-weight: bold;
+        }
+        .captions > span.hashtag {
+            color: darkblue;
+        }
+        .count {
+            margin-right: auto;
+            margin-left: 16px;
+            margin-top: 10px;
+            color: lightgray;
+
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .comment {
+            width: 95%;
+            border-bottom: 1px solid rgb(150, 150, 150);
+            display: flex;
+            align-items: center;
+            font-size: 5px;
+            margin-top: 10px;
+        }
+        .comment-box{
+            width: 95%;
+            height: 20px;
+            margin-bottom: 5px;
+        }
+        .comment-box > input {
+            border: none;
+            width: 95%;
+            margin-right: auto;
+            font-size: 16px;
+            background-color: transparent;
+            font-weight: lighter;
+        }
+        .comment-box > input:focus {
+            outline: none;
+            background-color: none;
+            text-indent: 0px;
+        }
+    </style>
+    <script>
+        let is_liked = true;
+        function like(){
+            if (is_liked == true) {
+                $('#heart').attr('src','image/icons/15.png')
+                is_liked = false;
+            } else {
+                $('#heart').attr('src','image/icons/6.png')
+                is_liked = true;
+            }
+        }
+    </script>
+</head>
+<body>
+   <div class="main">
+        <div class="sidebar">
+            <li>
+                <img width="102" src="image/logo_instagram.png" alt="">
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/1.png" alt="">
+                <p class="bold">Home</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/2.png" alt="">
+                <p class="bold">Search</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/3.png" alt="">
+                <p class="bold">Explore</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/4.png" alt="">
+                <p class="bold">Reels</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/5.png" alt="">
+                <p class="bold">Messages</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/6.png" alt="">
+                <p class="bold">Notifications</p>
+            </li><li class="sidebar-content flex-row">
+                <img src="image/icons/7.png" alt="">
+                <p class="bold">Create</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img width="24" class="sidebar-profile" src="image/profile/2.jpg" alt="">
+                <p class="bold">Profile</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/9.png" alt="">
+                <p class="bold">More</p>
+            </li>
+            <li class="sidebar-content flex-row">
+                <img src="image/icons/10.png" alt="">
+                <p class="bold">Home</p>
+            </li>
+        </div>
+
+        <div class="wrapper">
+            <div class="center flex-col">
+                <div class="status-wrapper flex-row">
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/9.jpg" alt="">
+                        </div>
+                        <p class="username">xii_tekajesa...</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/1.png" alt="">
+                        </div>
+                        <p class="username">433</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/2.jpg" alt="">
+                        </div>
+                        <p class="username">evos.luch</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/3.jpg" alt="">
+                        </div>
+                        <p class="username">freefirebgid</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/4.jpg" alt="">
+                        </div>
+                        <p class="username">erigostore</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/5.jpg" alt="">
+                        </div>
+                        <p class="username">jkt48</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/6.jpg" alt="">
+                        </div>
+                        <p class="username">leomessi</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/7.jpg" alt="">
+                        </div>
+                        <p class="username">jkt48.shani</p>
+                    </div>
+
+                    <div class="status-card flex-col">
+                        <div class="profile-pic">
+                            <img width="32" src="image/follower/8.jpg" alt="">
+                        </div>
+                        <p class="username">evosesport</p>
+                    </div>
+                </div>
+
+                <div class="feed flex-col">
+                    <div class="profile flex-row">
+                        <div class="img-wrap">
+                            <img width="32" src="image/follower/1.png">
+                        </div>
+                        <p class="flex-col">
+                            <span>433✅</span>
+                            <span>Barcelona, Spain</span>
+                        </p>
+                        <img width="20" src="image/icons/10.png">
+                    </div>
+                <div class="imgs swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="image/post/feed2.jpg"></div>
+                        <div class="swiper-slide"><img src="image/post/feed.jpg"></div>
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+                <div class="icons flex-row">
+                    <img id='heart' onclick="like()" src="image/icons/6.png">
+                    <img src="image/icons/12.png">
+                    <img src="image/icons/13.png">
+                    <img src="image/icons/14.png">
+                </div>
+                <div class="likes">
+                    123,456 likes
+                </div>
+                <div class="captions">
+                    <span class="title">433✅</span>
+                    Barcelona drop points 𝗔𝗚𝗔𝗜𝗡 and go 🔟 points behind Real Madrid 😬
+                    <span class="hashtag">#SpartaCodingClub #CloneCoding #Instagram #LearningX</span>
+                </div>
+                <div class="count">
+                    View all 7,777 comments
+                </div>
+                <div class="comment flex-row">
+                <div class="comment-box">
+                    <input type="text" name="" id="" placeholder="Add a comment....">
+                </div>
+                <div class="imgs emoji-icons">
+                    <img src="image/icons/17.png">
+                </div>
+                </div>
+            </div>
+
+
+            </div>
+            <div class="account flex-col">
+                <div class="account-content">
+                    <li class="flex-row">
+                        <div class="img-wrap">
+                            <img width="47" src="image/profile/2.jpg">
+                        </div>
+                        <p class="flex-col">
+                            <span>nopik.aja</span>
+                            <span>pik</span>
+                        </p>
+                        <a href="#">Switch</a>
+                    </li>
+                    <li class="flex-row suggestion">
+                        <span>Suggestion for you</span>
+                        <a href="#">See All</a>
+                    </li>
+                    <li class="flex-row friends">
+                        <div class="img-wrap">
+                            <img width="47" src="image/profile/3.jpg">
+                        </div>
+                        <p class="flex-col">
+                            <span>jkt48.flora✅</span>
+                            <span>Suggested for you</span>
+                        </p>
+                        <a href="#">Follow</a>
+                    </li>
+                    <li class="flex-row friends">
+                        <div class="img-wrap">
+                            <img width="47" src="image/profile/4.jpg">
+                        </div>
+                        <p class="flex-col">
+                            <span>jkt48.freya✅</span>
+                            <span>Suggested for you</span>
+                        </p>
+                        <a href="#">Follow</a>
+                    </li>
+                    <li class="flex-row friends">
+                        <div class="img-wrap">
+                            <img width="47" src="image/profile/5.jpg">
+                        </div>
+                        <p class="flex-col">
+                            <span>jkt48.zee✅</span>
+                            <span>Suggested for you</span>
+                        </p>
+                        <a href="#">Follow</a>
+                    </li>
+                    <li class="flex-row friends">
+                        <div class="img-wrap">
+                            <img width="47" src="image/profile/6.jpg">
+                        </div>
+                        <p class="flex-col">
+                            <span>jkt48.indira✅</span>
+                            <span>Suggested for you</span>
+                        </p>
+                        <a href="#">Follow</a>
+                    </li>
+                    <li class="flex-row friends">
+                        <div class="img-wrap">
+                            <img width="47" src="image/profile/7.jpg">
+                        </div>
+                        <p class="flex-col">
+                            <span>jkt48.greesel✅</span>
+                            <span>Suggested for you</span>
+                        </p>
+                        <a href="#">Follow</a>
+                    </li>
+
+                </div>
+                <div class="about">
+                    <a href="#">About .</a>
+                    <a href="#">Help .</a>
+                    <a href="#">API .</a>
+                    <a href="#">Jobs .</a>
+                    <a href="#">Privacy .</a>
+                    <a href="#">Terms .</a>
+                    <a href="#">Locations .</a>
+                    <a href="#">Language .</a>
+                    <a href="#">Meta Verified .</a>
+
+                </div>
+                <div class="name">
+                    © 2024 INSTAGRAM FROM META
+                </div>
+            </div>
+        </div>
+   </div> 
+   <script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        // Navigation arrows
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+  </script>
+
+</body>
+</html>
